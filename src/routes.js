@@ -6,7 +6,7 @@ import Clients from './pages/Clients'
 import AddClient from './pages/AddClient'
 import ClientsList from './pages/ClientsList'
 export default new VueRouter({
-    mode: 'history',
+    
     routes:[
     {
         path:'',
