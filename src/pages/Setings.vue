@@ -108,9 +108,9 @@
 import axios from 'axios';
 
 
-   const urlGoods ="http://cybernightdev.pythonanywhere.com/goods/all";
-  const urlCategory= "http://cybernightdev.pythonanywhere.com/goods/category/all"
-  const urlAddCategory = "http://cybernightdev.pythonanywhere.com/goods/category/add"
+   const urlGoods ="https://cybernightdev.pythonanywhere.com/goods/all";
+  const urlCategory= "https://cybernightdev.pythonanywhere.com/goods/category/all"
+  const urlAddCategory = "https://cybernightdev.pythonanywhere.com/goods/category/add"
 export default {
   
     data() {

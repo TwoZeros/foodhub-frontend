@@ -35,7 +35,7 @@
       
 </template>
 <script>
-const url ="http://cybernightdev.pythonanywhere.com/order/all/";
+const url ="https://cybernightdev.pythonanywhere.com/order/all/";
 export default {
     data() {
     return {
