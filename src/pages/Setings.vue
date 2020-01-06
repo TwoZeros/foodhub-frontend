@@ -102,20 +102,17 @@
 
   
 </template>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 <script>
- M.AutoInit();
-document.addEventListener('DOMContentLoaded', function() {
-    var modaladd = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(modaladd)
-     var el =document.querySelectorAll('.tabs');
-    var instanceTab = M.Tabs.init(el);
-   
-  });
+import axios from 'axios';
+
 
    const urlGoods ="http://cybernightdev.pythonanywhere.com/goods/all";
   const urlCategory= "http://cybernightdev.pythonanywhere.com/goods/category/all"
   const urlAddCategory = "http://cybernightdev.pythonanywhere.com/goods/category/add"
 export default {
+  
     data() {
     return {
        goods:'',
@@ -139,6 +136,10 @@ export default {
                         }
                     },
                 mounted() {
+                     var modaladd = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(modaladd)
+     var el =document.querySelectorAll('.tabs');
+    var instanceTab = M.Tabs.init(el);
                     axios.get(urlGoods).then(response => {
                         this.goods= response.data
                     })
