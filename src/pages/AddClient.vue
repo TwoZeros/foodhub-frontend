@@ -8,36 +8,59 @@
                      
                         <div class="row">
                           <div class="input-field col s6">
-                            <input v-model="fio" id="fio" type="text" class="validate">
+                            <input
+                             autocomplete="off"
+                             v-model="fio" id="fio" type="text" class="validate">
                             <label for="fio">ФИО</label>
+                             <span class="helper-text" v-if="!$v.fio.required && $v.fio.minLength" data-error="wrong">Заполните поле</span>
+                             <span class="helper-text" v-if="!$v.fio.minLength" data-error="wrong">Кажется, тут ошибка</span>
+
                           </div>
 
                           <div class="input-field col s6">
-                            <input v-model="telephone" value="+7" v-mask="'+7(###)-###-##-##'" id="telephone" type="text" class="validate">
+                            
+                            <input v-model="telephone" 
+                            value="+7" 
+                            autocomplete="off"
+                            v-mask="'+7(###)-###-##-##'" 
+                            id="telephone"
+                             type="text" 
+                             
+                             class="validate">
                             <label for="telephone">Телефон</label>
+                               <span class="helper-text" v-if="!$v.telephone.required" data-error="wrong">Укажите контактный номер</span>
+                            <span class="helper-text" v-if="!$v.telephone.validFormat  && $v.telephone.required" data-error="wrong">Не верный формат</span>
+                            
                           </div>
                         </div>
-                       
+                      
                         </div>
                         <div class="row">
                           <div class="input-field col s6">
-                            <input v-model="email"  id="email" type="text" class="validate">
+                            <span v-if="$v.email.$error">Не верный еmail
+                       </span>
+                            <input v-model="email"  id="email" type="email" class="validate">
                             <label for="email">Email</label>
+                             <span class="helper-text" data-error="Не верный формат" data-success="Отлично">Если есть</span>
                           </div>
-
+                         
                           <div class="input-field col s6">
-                            <select v-model="status_client"> 
-                              <option value="" disabled selected>Выберите статус</option>
-                              <option value="1">Постоянный</option>
-                              <option value="2">Новый клиент</option>
+                            <select v-model="status_client" required> 
+                              <option  value="client.id" disabled selected>Выберите статус</option>
+                              <option v-for="status in statusList" :value="status.id" :key="status.id" >{{status.name}}</option>
+                            
                               
                             </select>
                             <label>Статус клиента</label>
+                             <span class="helper-text" data-success="ok" data-error="wrong">Укажите статус</span>
                           </div>
                         
                         </div>
                     
-                        <button @click="createClient()" class="waves-effect waves-light btn-small"><i class="material-icons left"></i>Сохранить </button>
+                        <button @click="createClient()" 
+                        class="waves-effect waves-light btn-small"
+                        :disabled="$v.$invalid"
+                        ><i class="material-icons left"></i>Сохранить </button>
                           <router-link to="/clients" class="waves-effect waves-light btn-small">Назад</router-link>
 
             </div>
@@ -47,22 +70,69 @@
 
 <script>
 
-document.addEventListener('DOMContentLoaded', function() {
-    
-  });
+  const url ="https://apifoodhub.herokuapp.com/client/create/";
+  const statusUrl = "https://apifoodhub.herokuapp.com/client/allstatus/";
+  import { required, minLength, between, email  } from 'vuelidate/lib/validators'
+
 export default {
-    mounted() {
-      var elems = document.querySelectorAll('select');
-      var instances = M.FormSelect.init(elems);
+    created() {
+          axios.get(statusUrl).then(
+            (response) => { this.statusList= response.data;
+            
+            },
+            (error) => { this.error = "Упс ошибка" });
     },
-     data() {
+    mounted() {
+      setTimeout(function(){
+         var elems = document.querySelectorAll('select');
+             var instances = M.FormSelect.init(elems);
+       },500);
+    
+      
+      
+      
+        
+    },
+    
+    data() {
     return {
       fio:'',
       telephone: '',
       email:'',
       status_client:'',
       error:'',
-
+      statusList:[],
+      list:[]
+      
     }},
+    validations: {
+    email: {
+      email,
+    
+    },
+    fio: {
+      required,
+      minLength: minLength(2)
+    },
+     status_client: {
+       required
+     },
+    telephone: {
+      required,
+      validFormat: val => /^\+7\(\d{3}\)-\d{3}-\d{2}-\d{2}$/.test(val),
+    }
+  },
+   methods: {
+          createClient() {
+            axios.post(url, {
+            fio: this.fio,
+            telephone: this.telephone,
+            email:this.email,
+            status_client:this.status_client
+            }).then(
+            (response) => { window.location.href = "#/clients" },
+            (error) => { this.error = "Упс ошибка" })
+            }
+          }
 }
 </script>

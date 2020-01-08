@@ -108,9 +108,9 @@
 import axios from 'axios';
 
 
-   const urlGoods ="https://cybernightdev.pythonanywhere.com/goods/all";
-  const urlCategory= "https://cybernightdev.pythonanywhere.com/goods/category/all"
-  const urlAddCategory = "https://cybernightdev.pythonanywhere.com/goods/category/add"
+   const urlGoods ="https://apifoodhub.herokuapp.com/goods/all";
+  const urlCategory= "https://apifoodhub.herokuapp.com/goods/category/all"
+  const urlAddCategory = "https://apifoodhub.herokuapp.com/goods/category/add"
 export default {
   
     data() {

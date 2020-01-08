@@ -29,7 +29,7 @@
        
 </template>
 <script>
- const url ="https://cybernightdev.pythonanywhere.com/client/all/";
+ const url ="https://apifoodhub.herokuapp.com/client/all/";
 export default {
     data() {
     return {
